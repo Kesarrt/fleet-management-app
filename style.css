@@ -111,4 +111,80 @@ font-size: 16px;
     border-radius: 4px;
 }
 
+#addbtn{
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
 
+.content{
+    width:75%;
+    padding:20px;
+    background-color: #f8f9fa;
+    overflow-y:auto;
+}
+
+.fleet-grid{
+    display:grid;
+    grid-template-columns: repeat(3,1fr);
+    gap:20px;
+}
+
+.fleet-card{
+    background:white;
+    border-radius:8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+    padding: bottom 15px;
+}
+
+.fleet-card img{
+    width: 100px;
+    height: 150px;
+    object-fit: contain;
+    background-color:#e9ecef;
+    padding: 10px;
+}
+
+.card-details{
+    padding:15px;
+    text-align:center;
+    width: 100px;
+}
+
+.status-green{color:green;}
+.status-red{color:red;}
+
+.card-actions{
+    display:flex;
+    flex-direction: column;
+    gap:8px;
+    width:90px;
+}
+
+.card-actions button{
+    padding: 8px;
+    border:none;
+    border-radius:4px;
+    cursor:pointer;
+    font: size 0.9rem;
+    transition:background 0.2s;
+}
+
+.btn-update{background-color:#ffc107;
+color:black;}
+.btn-toggle{background-color:#28a745;
+color:white;}
+.btn-delete{background-color:#dc3545;
+color:white;}
+
+.btn-update:hover{background-color:#e0a800;}
+.btn-toggle:hover{background-color:#218838;}
+.btn-delete:hover{background-color:#c82333;}
