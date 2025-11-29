@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <h1>Fleet Manager</h1>
+        <div class="filters">
+            <select id="filterCategory">
+                <option value=""All">AllCategory</option>
+                <option value="Auto">Auto</option>
+                <option value="car">Car</option>
+                <option value="truck">Truck</option>
+                <option value="bus">Bus</option>
+            </select>
+            
+            <select id="filerAvailability">
+                <option value="">All Stuatus</option>
+                <option value="Available">Available</option>
+                <option value="Unavailable">Unavailable</option>
+            </select>
+
+            <button id="cleanFilterBtn">Clean Filters</button>
+            </div>
+    </nav>
+
+    <div class="main-layout">
+        <aside class="sidebar">
+            <h3>Add New Fleet Item</h3>
+            <form id="fleetform">
+                <label>Reg No</label>
+                <input type="text" id="regNo" placeholder="e.g. MH-12-AB-1234">
+            </form>
+    </div>
+</body>
+</html>
