@@ -13,4 +13,6 @@ const render=()=>{
             <h3>${v.name}</h3>
             <p>Price: ${v.price} </p>
             <button onclick="rent(${i})">Rent</button>
-        </div>`:""}
+        </div>`:""
+    //incomplete code
+    }
