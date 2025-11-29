@@ -34,7 +34,32 @@
             <form id="fleetform">
                 <label>Reg No</label>
                 <input type="text" id="regNo" placeholder="e.g. MH-12-AB-1234">
+                <label>Category</label>
+                <select id="category">
+                    <option value="">Select Category</option>
+                    <option value="auto">Auto</option>
+                    <option value="car">Car</option>
+                    <option value="truck">Truck</option>
+                    <option value="bus">Bus</option>
+                    </select>
+                    <label>Driver Name</label>
+                    <input type="text" id="driverName" placeholder="Enter Driver Name">
+                    <label>Is Available?</label>
+                    <select id="Availability">
+                        <option value="true">Availability</option>
+                       <option value="false">Unavailablity</option>
+                    </select>
+                    <nutton type="submit" id="addFleetItemBtn"></nutton>
+
             </form>
+            </aside>
+
+            <main class="content">
+                <div id="fleetContainer"
+                class="fleet-grid">
+            </div>
+            </main>
     </div>
+    <script src="admin.js"></script>
 </body>
 </html>
