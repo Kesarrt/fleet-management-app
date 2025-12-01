@@ -2,64 +2,138 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav class="navbar">
-        <h1>Fleet Manager</h1>
-        <div class="filters">
-            <select id="filterCategory">
-                <option value=""All">AllCategory</option>
-                <option value="Auto">Auto</option>
-                <option value="car">Car</option>
-                <option value="truck">Truck</option>
-                <option value="bus">Bus</option>
-            </select>
-            
-            <select id="filerAvailability">
-                <option value="">All Stuatus</option>
-                <option value="Available">Available</option>
-                <option value="Unavailable">Unavailable</option>
-            </select>
 
-            <button id="cleanFilterBtn">Clean Filters</button>
-            </div>
-    </nav>
+    <!-- ================= ADD VEHICLE FORM ================ -->
+    <form id="fleetForm">
+        <h2>Add Vehicle</h2>
 
-    <div class="main-layout">
-        <aside class="sidebar">
-            <h3>Add New Fleet Item</h3>
-            <form id="fleetform">
-                <label>Reg No</label>
-                <input type="text" id="regNo" placeholder="e.g. MH-12-AB-1234">
-                <label>Category</label>
-                <select id="category">
-                    <option value="">Select Category</option>
-                    <option value="auto">Auto</option>
-                    <option value="car">Car</option>
-                    <option value="truck">Truck</option>
-                    <option value="bus">Bus</option>
-                    </select>
-                    <label>Driver Name</label>
-                    <input type="text" id="driverName" placeholder="Enter Driver Name">
-                    <label>Is Available?</label>
-                    <select id="Availability">
-                        <option value="true">Availability</option>
-                       <option value="false">Unavailablity</option>
-                    </select>
-                    <nutton type="submit" id="addFleetItemBtn"></nutton>
+        <input type="text" id="regNo" placeholder="Registration Number">
 
-            </form>
-            </aside>
+        <select id="category">
+            <option value="">Select Category</option>
+            <option value="Truck">Truck</option>
+            <option value="Van">Van</option>
+            <option value="Car">Car</option>
+        </select>
 
-            <main class="content">
-                <div id="fleetContainer"
-                class="fleet-grid">
-            </div>
-            </main>
+        <input type="text" id="driver" placeholder="Driver Name">
+
+        <select id="availability">
+            <option value="true">Available</option>
+            <option value="false">Unavailable</option>
+        </select>
+
+        <button type="submit">Add Vehicle</button>
+    </form>
+
+    <hr>
+
+    <!-- ================= FILTERS ================ -->
+    <div class="filters">
+        <select id="filterCategory">
+            <option value="All">All Categories</option>
+            <option value="Truck">Truck</option>
+            <option value="Van">Van</option>
+            <option value="Car">Car</option>
+        </select>
+
+        <select id="filterAvailability">
+            <option value="All">All Status</option>
+            <option value="Available">Available</option>
+            <option value="Unavailable">Unavailable</option>
+        </select>
+
+        <button id="clearFilterBtn">Clear Filters</button>
     </div>
-    <script src="admin.js"></script>
+
+    <hr>
+
+    <!-- ================= VEHICLE LIST ================ -->
+    <div id="fleetContainer"></div>
+
+
+    <!-- ================= JAVASCRIPT ================ -->
+    <script>
+        let fleet = [];
+        const el = (id) => document.getElementById(id);
+
+        function render() {
+            const cat = el('filterCategory').value;
+            const stat = el('filterAvailability').value;
+
+            const view = fleet.filter(v =>
+                (cat === "All" || v.category === cat) &&
+                (stat === "All" || (stat === "Available" ? v.avail : !v.avail))
+            );
+
+            el('fleetContainer').innerHTML = view.map(v => {
+                const orgIdx = fleet.indexOf(v);
+                return `
+                <div class="fleet-card">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3202/3202926.png">
+                    <div class="card-details">
+                        <h3>${v.reg}</h3>
+                        <p><strong>Category:</strong> ${v.category}</p>
+                        <p><strong>Driver:</strong> ${v.driver}</p>
+                        <p class="${v.avail ? 'status-green' : 'status-red'}">
+                            <strong>Status:</strong> ${v.avail ? 'Available' : 'Unavailable'}
+                        </p>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn-update" onclick="handle('edit', ${orgIdx})">Update Driver</button>
+                        <button class="btn-toggle" onclick="handle('toggle', ${orgIdx})">Change Status</button>
+                        <button class="btn-delete" onclick="handle('del', ${orgIdx})">Delete</button>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        window.handle = (type, i) => {
+            if (type === 'edit') {
+                const name = prompt("New Driver Name:", fleet[i].driver);
+                if (name && name.trim()) { fleet[i].driver = name.trim(); render(); }
+            }
+            else if (type === 'toggle') {
+                fleet[i].avail = !fleet[i].avail;
+                render();
+            }
+            else if (type === 'del') {
+                if (confirm("Delete vehicle?")) { fleet.splice(i, 1); render(); }
+            }
+        };
+
+        el('fleetForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const reg = el('regNo').value,
+                  cat = el('category').value,
+                  driver = el('driver').value;
+
+            if (!reg || !cat || !driver) return alert("Please fill all fields");
+
+            fleet.push({
+                reg,
+                category: cat,
+                driver,
+                avail: el('availability').value === "true"
+            });
+
+            el('fleetForm').reset();
+            render();
+        });
+
+        el('filterCategory').onchange = render;
+        el('filterAvailability').onchange = render;
+
+        el('clearFilterBtn').onclick = () => {
+            el('filterCategory').value = "All";
+            el('filterAvailability').value = "All";
+            render();
+        };
+    </script>
+
 </body>
 </html>
