@@ -13,7 +13,9 @@ const render = () => {
     );
 
     // DISPLAY VEHICLES
-    $('fleetContainer').innerHTML = view.map((v, i) => `
+    $('fleetContainer').innerHTML = view.map(v => {
+        const i = fleet.indexOf(v); // FIXED INDEX
+        return `
         <div class="fleet-card">
             <img src="https://cdn-icons-png.flaticon.com/512/609/609803.png" />
 
@@ -32,7 +34,8 @@ const render = () => {
                 <button onclick="handle('del', ${i})">Delete</button>
             </div>
         </div>
-    `).join('');
+        `;
+    }).join('');
 };
 
 // UNIVERSAL HANDLER FOR ALL BUTTONS
